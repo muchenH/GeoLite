@@ -1,5 +1,5 @@
 #
-# https://github.com/P3TERX/GeoLite.mmdb
+# https://github.com/muchenH/GeoLite
 #
 # File: .github/workflows/GeoLite.yml
 # Description: Publish GeoLite.mmdb
@@ -27,7 +27,7 @@
 # SOFTWARE.
 #
 
-name: Publish GeoLite.mmdb
+name: Publish GeoLite
 
 on:
   repository_dispatch:
