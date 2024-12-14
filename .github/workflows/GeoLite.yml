@@ -49,6 +49,8 @@ jobs:
         mkdir -p upload
         cp -v GeoLite*/*.mmdb upload
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+      - name: Verify mmdb files
+        run: ls -lh upload
 
     - name: Push to "download" branch
       run: |
@@ -61,9 +63,13 @@ jobs:
         git commit -m "${{ env.TAG_NAME }}"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f origin download
+      - name: Debug Git
+        run: |
+          git status
+          git log --oneline
 
     - name: Upload to Releases
-      uses: softprops/action-gh-release@master
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -72,7 +78,7 @@ jobs:
         files: upload/*.mmdb
 
     - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
+      uses: dev-drprasad/delete-older-releases@v1
       with:
         keep_latest: 2
         delete_tags: true
